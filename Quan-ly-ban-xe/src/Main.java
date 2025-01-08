@@ -19,6 +19,18 @@ public class Main {
             switch (choice) {
                 case 1:
                     //thêm khách hàng
+                {
+                    System.out.println("Nhập thông tin khách hàng (ID, Tên, Email, SĐT): ");
+                    System.out.println("Nhập ID: ");
+                    int id = sc.nextInt();
+                    System.out.println("Nhập tên: ");
+                    String name = sc.nextLine();
+                    System.out.println("Nhập Email: ");
+                    String email = sc.nextLine();
+                    System.out.println("Nhập SĐT: ");
+                    String phone = sc.nextLine();
+
+                }
                 case 2:
                     // kiểm tra tồn kho
                 case 3:
