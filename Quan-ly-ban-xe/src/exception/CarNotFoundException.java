@@ -1,4 +1,6 @@
 package exception;
 
-public class CarNotFoundException {
+public class CarNotFoundException extends Exception {
+
+
 }

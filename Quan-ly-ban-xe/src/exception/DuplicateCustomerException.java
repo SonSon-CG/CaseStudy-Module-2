@@ -1,4 +1,4 @@
 package exception;
 
-public class DuplicateCustomerException {
+public class DuplicateCustomerException extends Exception {
 }

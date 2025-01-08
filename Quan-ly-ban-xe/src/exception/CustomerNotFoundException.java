@@ -1,4 +1,4 @@
 package exception;
 
-public class CustomerNotFoundException {
+public class CustomerNotFoundException extends Exception {
 }
