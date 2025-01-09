@@ -25,5 +25,14 @@ public abstract class Car implements Serializable {
         return price;
     }
 
+    @Override
+    public String toString() {
+        return "Car{" +
+                "licensePlate='" + licensePlate + '\'' +
+                ", brand='" + brand + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
     public abstract String displayInfo();
 }

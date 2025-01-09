@@ -9,6 +9,13 @@ public class SUV extends Car {
     }
 
     @Override
+    public String toString() {
+        return "SUV{" +
+                "seats=" + seats +
+                '}';
+    }
+
+    @Override
     public String displayInfo() {
         return "SUV{" +
                 "licensePlate='" + getLicensePlate() + '\'' +

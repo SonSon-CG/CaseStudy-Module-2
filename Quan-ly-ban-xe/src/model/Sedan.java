@@ -9,6 +9,13 @@ public class Sedan extends Car {
     }
 
     @Override
+    public String toString() {
+        return "Sedan{" +
+                "numDoors=" + numDoors +
+                '}';
+    }
+
+    @Override
     public String displayInfo() {
         return "Sedan{" +
                 "licensePlate='" + getLicensePlate() + '\'' +

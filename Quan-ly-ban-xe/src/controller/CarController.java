@@ -11,7 +11,7 @@ public class CarController {
     public void saveInventoryToFile(String fileName) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             for (Car car : Inventory.getInstance().getCars()) {
-                writer.write(car.toString());
+                writer.write(car.toString()); // Sử dụng toString để ghi thông tin đầy đủ
                 writer.newLine();
             }
             System.out.println("Danh sách tồn kho đã được ghi vào file: " + fileName);
@@ -19,6 +19,7 @@ public class CarController {
             System.out.println("Lỗi khi ghi file: " + e.getMessage());
         }
     }
+
 
 
     public void loadInventoryFromFile(String fileName) {
