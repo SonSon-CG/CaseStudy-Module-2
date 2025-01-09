@@ -1,7 +1,7 @@
 import model.Car;
 import model.SUV;
 import model.Sedan;
-import model.Inventory;
+
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -52,12 +52,11 @@ public class Main {
                     if (cartype == 1) {
                         System.out.println("Nhập số cửa");
                         int numDoors = sc.nextInt();
-                        Car xe1  new Sedan(licensePLate, brand, price, numDoors);
-
+                        Car xe1 = new Sedan(licensePLate, brand, price, numDoors);
                     }else if(cartype == 2) {
                         System.out.println("Nhập số ghế");
                         int seats = sc.nextInt();
-                        Car xe2  new SUV(licensePLate, brand, price, seats);
+                        Car xe2 = new SUV(licensePLate, brand, price, seats);
                 }
                 case 4:
                     //bán xe
