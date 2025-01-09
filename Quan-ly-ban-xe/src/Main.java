@@ -1,15 +1,19 @@
-import model.Car;
-import model.SUV;
-import model.Sedan;
+import controller.*;
+import exception.CarNotFoundException;
+import exception.CustomerNotFoundException;
+import exception.DuplicateCustomerException;
+import model.*;
 
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        CarController carController = new CarController();
+        CustomerController customerController = new CustomerController();
+        TransactionController transactionController = new TransactionController();
+        Inventory inventory = Inventory.getInstance();
 
-        Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.println("\nMenu:");
             System.out.println("1. Thêm khách hàng");
@@ -19,64 +23,112 @@ public class Main {
             System.out.println("5. In lịch sử giao dịch");
             System.out.println("6. Thoát");
             System.out.print("Chọn: ");
-            int choice = sc.nextInt();
-            switch (choice) {
-                case 1:
-                    //thêm khách hàng
-                {
-                    System.out.println("Nhập thông tin khách hàng (ID, Tên, Email, SĐT): ");
-                    System.out.println("Nhập ID: ");
-                    int id = sc.nextInt();
-                    System.out.println("Nhập tên: ");
-                    sc.nextLine();
-                    String name = sc.nextLine();
-                    System.out.println("Nhập Email: ");
-                    String email = sc.nextLine();
-                    System.out.println("Nhập SĐT: ");
-                    String phone = sc.nextLine();
-                    sc.nextLine();
-                }
-                case 2:
-                    // kiểm tra tồn kho
-                case 3:
-                    System.out.println("Bạn muốn thêm Sedan hay SUV? ");
-                    System.out.println("1.Sedan / 2.SUV");
-                    int cartype = sc.nextInt();
-                    System.out.println("Nhập biển số");
-                    sc.nextLine();
-                    String licensePLate = sc.nextLine();
-                    System.out.println("Nhập thương hiệu");
-                    String brand = sc.nextLine();
-                    System.out.println("Nhập giá");
-                    double price = sc.nextDouble();
-                    if (cartype == 1) {
-                        System.out.println("Nhập số cửa");
-                        int numDoors = sc.nextInt();
-                        Car xe1 = new Sedan(licensePLate, brand, price, numDoors);
-                    }else if(cartype == 2) {
-                        System.out.println("Nhập số ghế");
-                        int seats = sc.nextInt();
-                        Car xe2 = new SUV(licensePLate, brand, price, seats);
-                }
-                case 4:
-                    //bán xe
-                    // nhập biển số xe
-                                    // kiểm tra xe trong kho
-                    // nhập ID khách
-                                    // kiểm tra khách
-                    // bán xe, remove ra khỏi kho
-                    // tạo giao dịch, ghi vào lịch sử
-                    // thông báo bán thành công
-                    //
-                case 5:
-                    // in lịch sử giao dịch ra file
-                case 6:
 
-                    System.out.println(" Thoát chương trình ");
-                default:
-                    System.out.println(" Lựa chọn không hợp lệ ");
+            // Đảm bảo scanner đọc lựa chọn đúng và xử lý lỗi nhập không hợp lệ
+            int choice;
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Vui lòng nhập một số hợp lệ.");
+                continue;
             }
 
+            switch (choice) {
+                case 1: {
+                    System.out.println("Nhập thông tin khách hàng (ID, Tên, Email, SĐT): ");
+                    try {
+                        System.out.print("ID: ");
+                        int id = Integer.parseInt(scanner.nextLine());
+                        System.out.print("Tên: ");
+                        String name = scanner.nextLine();
+                        System.out.print("Email: ");
+                        String email = scanner.nextLine();
+                        System.out.print("SĐT: ");
+                        String phone = scanner.nextLine();
+
+                        Customer customer = new Customer(id, name, email, phone);
+                        customerController.addCustomer(customer);
+                        System.out.println("Thêm khách hàng thành công!");
+                    } catch (DuplicateCustomerException | IllegalArgumentException e) {
+                        System.out.println("Lỗi: " + e.getMessage());
+
+                    }
+                    break;
+                }
+                case 2: {
+                    System.out.println("Danh sách tồn kho:");
+                    if (inventory.getCars().isEmpty()) {
+                        System.out.println("Kho hiện tại không có xe nào.");
+                    } else {
+                        inventory.getCars().forEach(System.out::println);
+                        carController.saveInventoryToFile("inventory.txt");
+                        System.out.println("Danh sách tồn kho đã được ghi ra file inventory.txt");
+                    }
+                    break;
+                }
+
+                case 3: {
+                    System.out.println("Chọn loại xe (1. Sedan, 2. SUV): ");
+                    try {
+                        int type = Integer.parseInt(scanner.nextLine());
+
+                        System.out.print("Nhập biển số: ");
+                        String licensePlate = scanner.nextLine();
+                        System.out.print("Nhập thương hiệu: ");
+                        String brand = scanner.nextLine();
+                        System.out.print("Nhập giá: ");
+                        double price = Double.parseDouble(scanner.nextLine());
+
+                        if (type == 1) {
+                            System.out.print("Nhập số cửa: ");
+                            int numDoors = Integer.parseInt(scanner.nextLine());
+                            Sedan sedan = new Sedan(licensePlate, brand, price, numDoors);
+                            inventory.addCar(sedan);
+                            System.out.println("Thêm xe sedan thành công!");
+                        } else if (type == 2) {
+                            System.out.print("Nhập số ghế: ");
+                            int seats = Integer.parseInt(scanner.nextLine());
+                            SUV suv = new SUV(licensePlate, brand, price, seats);
+                            inventory.addCar(suv);
+                            System.out.println("Thêm xe SUV thành công!");
+                        } else {
+                            System.out.println("Loại xe không hợp lệ.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Dữ liệu nhập không hợp lệ. Vui lòng thử lại.");
+                    }
+                    break;
+                }
+                case 4: {
+                    try {
+                        System.out.print("Nhập biển số xe cần bán: ");
+                        String licensePlate = scanner.nextLine();
+                        System.out.print("Nhập ID khách hàng: ");
+                        int customerId = Integer.parseInt(scanner.nextLine());
+
+                        transactionController.sellCar(licensePlate, customerId, customerController);
+                    } catch (CarNotFoundException | CustomerNotFoundException e) {
+                        System.out.println("Lỗi: " + e.getMessage());
+                    } catch (NumberFormatException e) {
+                        System.out.println("ID khách hàng phải là một số nguyên hợp lệ.");
+                    }
+                    break;
+                }
+                case 5: {
+                    System.out.println("Lịch sử giao dịch:");
+                    transactionController.printTransactionsFromFile("transaction.txt");
+                    break;
+                }
+                case 6: {
+                    System.out.println("Thoát chương trình.");
+                    scanner.close();
+                    return;
+                }
+                default: {
+                    System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");
+                    break;
+                }
             }
         }
     }
+}

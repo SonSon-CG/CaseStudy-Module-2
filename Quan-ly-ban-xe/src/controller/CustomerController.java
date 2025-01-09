@@ -1,7 +1,7 @@
 package controller;
 
-import exception.CustomerNotFoundException;
 import exception.DuplicateCustomerException;
+import exception.CustomerNotFoundException;
 import model.Customer;
 
 import java.util.HashMap;
@@ -26,11 +26,5 @@ public class CustomerController {
         return customerMap.get(id);
     }
 
-    public void displayCustomers() {
-        if (customerMap.isEmpty()) {
-            System.out.println("Danh sách khách hàng trống.");
-        } else {
-            customerMap.values().forEach(System.out::println);
-        }
-    }
+
 }

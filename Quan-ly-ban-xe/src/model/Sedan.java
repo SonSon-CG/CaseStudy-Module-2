@@ -1,6 +1,6 @@
 package model;
 
-public class Sedan extends Car{
+public class Sedan extends Car {
     private int numDoors;
 
     public Sedan(String licensePlate, String brand, double price, int numDoors) {
@@ -11,10 +11,10 @@ public class Sedan extends Car{
     @Override
     public String displayInfo() {
         return "Sedan{" +
-                "numDoors=" + numDoors +
-                ", licensePlate='" + licensePlate + '\'' +
-                ", brand='" + brand + '\'' +
-                ", price=" + price +
+                "licensePlate='" + getLicensePlate() + '\'' +
+                ", brand='" + getBrand() + '\'' +
+                ", price=" + getPrice() +
+                ", numDoors=" + numDoors +
                 '}';
     }
 }
