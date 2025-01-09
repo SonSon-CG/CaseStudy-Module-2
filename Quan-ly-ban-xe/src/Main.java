@@ -34,7 +34,12 @@ public class Main {
                 case 2:
                     // kiểm tra tồn kho
                 case 3:
-                    //thêm xe
+                    System.out.println("Bạn muốn thêm Sedan hay SUV? ");
+                    System.out.println("1.Sedan / 2.SUV");
+                    int cartype = sc.nextInt();
+                    System.out.println("Nhập biển số");
+                    System.out.println("Nhập thương hiệu");
+                    System.out.println("Nhập giá");
                 case 4:
                     //bán xe
                     // nhập biển số xe
