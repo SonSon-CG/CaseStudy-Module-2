@@ -1,3 +1,7 @@
+import model.Car;
+import model.SUV;
+import model.Sedan;
+import model.Inventory;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -24,12 +28,13 @@ public class Main {
                     System.out.println("Nhập ID: ");
                     int id = sc.nextInt();
                     System.out.println("Nhập tên: ");
+                    sc.nextLine();
                     String name = sc.nextLine();
                     System.out.println("Nhập Email: ");
                     String email = sc.nextLine();
                     System.out.println("Nhập SĐT: ");
                     String phone = sc.nextLine();
-
+                    sc.nextLine();
                 }
                 case 2:
                     // kiểm tra tồn kho
@@ -38,8 +43,22 @@ public class Main {
                     System.out.println("1.Sedan / 2.SUV");
                     int cartype = sc.nextInt();
                     System.out.println("Nhập biển số");
+                    sc.nextLine();
+                    String licensePLate = sc.nextLine();
                     System.out.println("Nhập thương hiệu");
+                    String brand = sc.nextLine();
                     System.out.println("Nhập giá");
+                    double price = sc.nextDouble();
+                    if (cartype == 1) {
+                        System.out.println("Nhập số cửa");
+                        int numDoors = sc.nextInt();
+                        Car xe1  new Sedan(licensePLate, brand, price, numDoors);
+
+                    }else if(cartype == 2) {
+                        System.out.println("Nhập số ghế");
+                        int seats = sc.nextInt();
+                        Car xe2  new SUV(licensePLate, brand, price, seats);
+                }
                 case 4:
                     //bán xe
                     // nhập biển số xe
